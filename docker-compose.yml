@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+    golang:
+        container_name: goecho-projectbase-api-debug      
+        env_file: 
+            - dev.env  
+        build:
+            context: .
+            dockerfile: Dockerfile.oracle.debug
+        ports: 
+            - 15300:8080
+            - 2345:2345            
+        volumes:
+            - .:/go/src/github.com/felipeolivers/goecho-projectbase-api
+        networks:
+            - goecho-projectbase-api-network
+
+networks:
+    goecho-projectbase-api-network:
+        name: goecho-projectbase-api-network
+        driver: bridge
+    

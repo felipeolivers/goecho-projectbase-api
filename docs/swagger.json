@@ -1,0 +1,48 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Copyright © 2021, Luiz Filipe Miranda de Oliveira.\nTodos os direitos reservados.",
+        "contact": {}
+    },
+    "paths": {
+        "/healthz": {
+            "get": {
+                "description": "Get Api Info",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "healthz"
+                ],
+                "summary": "Get Api Info",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Healthz"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Healthz": {
+            "type": "object",
+            "properties": {
+                "environment": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+FROM oraclelinux:8-slim
+
+# Version Oracle Client and Go
+ARG ic_release=19
+ARG ic_update=12
+ARG go_release=1.16
+ARG go_update=7
+
+# Oracle Client and Tools
+RUN microdnf install oracle-release-el8 oracle-epel-release-el8
+RUN dnf install -y tar gzip gcc make procps-ng inotify-tools
+RUN dnf install -y oracle-instantclient${ic_release}.${ic_update}-basic \
+    oracle-instantclient${ic_release}.${ic_update}-devel \
+    oracle-instantclient${ic_release}.${ic_update}-sqlplus
+RUN rm -rf /var/cache/yum
+
+RUN curl https://dl.google.com/go/go${go_release}.${go_update}.linux-amd64.tar.gz \
+    -o - |tar xz -C /
+
+# Environments
+ENV PATH="${PATH}:/go/bin"
+ENV GOPATH=/go
+ENV GOLANG_VERSION=${ic_release}
+
+# Install delve (debug)
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+
+# gopls Tools
+RUN go get -v golang.org/x/tools/gopls
+
+# Swagger
+RUN go get -u github.com/swaggo/swag/cmd/swag
+RUN go get -u github.com/swaggo/echo-swagger
+
+WORKDIR /go/src/github.com/felipeolivers/goecho-projectbase-api
+
+COPY . .
+
+RUN go mod tidy
+
+EXPOSE 2345/tcp
+EXPOSE 8080/tcp

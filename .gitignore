@@ -1,0 +1,5 @@
+# Byte-compiled / optimized / DLL files
+__debug_bin
+gin-bin
+dev.env
+k8s

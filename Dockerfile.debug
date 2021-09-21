@@ -1,0 +1,16 @@
+FROM golang:1.16.7-alpine3.14
+
+RUN apk add build-base
+RUN apk add inotify-tools
+
+# Install delve (debug)
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+
+RUN go get -v golang.org/x/tools/gopls
+
+COPY . /go/src/github.com/felipeolivers/goecho-projectbase-api
+
+WORKDIR /go/src/github.com/felipeolivers/goecho-projectbase-api
+
+EXPOSE 8080
+EXPOSE 2345

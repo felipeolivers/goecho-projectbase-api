@@ -1,0 +1,32 @@
+definitions:
+  models.Healthz:
+    properties:
+      environment:
+        type: string
+      name:
+        type: string
+      version:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: |-
+    Copyright © 2021, Luiz Filipe Miranda de Oliveira.
+    Todos os direitos reservados.
+paths:
+  /healthz:
+    get:
+      consumes:
+      - application/json
+      description: Get Api Info
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Healthz'
+      summary: Get Api Info
+      tags:
+      - healthz
+swagger: "2.0"
